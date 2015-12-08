@@ -11,9 +11,9 @@ public:
 	virtual int Get()
 	{
 		// outputs pt=0
-		cout << "pt= " << ofGetAppPtr() << endl;
+		// cout << "pt= " << ofGetAppPtr() << endl;
 		// crashes
-		ofLine(50,500,100,100);
+		ofLine(50,500,400,100);
 		return -1;
 	}
 };

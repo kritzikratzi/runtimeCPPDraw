@@ -28,7 +28,7 @@ void ofApp::setup(){
 	runtimeSystem.AddIncludeDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/poco/include");
 	runtimeSystem.AddIncludeDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/rtAudio/include");
 	runtimeSystem.AddIncludeDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/tess2/include");
-	runtimeSystem.AddLibraryDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/openFrameworksCompiled/lib/osx");
+//	runtimeSystem.AddLibraryDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/openFrameworksCompiled/lib/osx");
 	runtimeSystem.GetObjectFactorySystem()->AddListener(this);
 
 	// construct first object
