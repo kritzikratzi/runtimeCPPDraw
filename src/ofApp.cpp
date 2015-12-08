@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	ofSetFrameRate(30); 
 	runtimeSystem.Initialise(&logger, NULL);
 	runtimeSystem.AddIncludeDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/openFrameworks/");
 	runtimeSystem.AddIncludeDir("/Users/hansi/Documents/OF/of_v0084_osx_release/libs/openFrameworks/3d");
@@ -76,6 +77,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	if( ofGetFrameNum() % 100 == 0 ) cout << ofGetFrameNum() << endl;
 	ofBackground(0, 0, 0);
 	ofSetColor(255);
 	ofTranslate(ofGetWidth()/2, ofGetHeight()/2);

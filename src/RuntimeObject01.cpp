@@ -12,8 +12,10 @@ public:
 	{
 		// outputs pt=0
 		// cout << "pt= " << ofGetAppPtr() << endl;
-		// crashes
-		ofLine(50,500,400,100);
+		// just doing some dumb shit with matrices to make sure they work.
+		ofMatrix4x4 mat;
+		ofVec3f v(1,0,0);
+		ofLine(200,500,0,ofGetMouseY()-400 + (mat*v).x);
 		return -1;
 	}
 };

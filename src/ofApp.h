@@ -59,5 +59,4 @@ class ofApp : public ofBaseApp,public IObjectFactoryListener{
 		RCPPLogger logger;
 		IUpdateable* 			m_pUpdateable;
 		ObjectId	   			m_ObjectId;
-	
 };

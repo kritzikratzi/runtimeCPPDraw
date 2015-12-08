@@ -1,15 +1,24 @@
+# C++ LiveCoding TestThingiethingthingieding
 
-TODO:
+This project is a messy testbed for c++ live coding support in openFrameworks. 
+
+
+### TODO:
+
 - make paths relative
 - figure out how to compile OF as dylib (or: compile entire emptyExample as dylib?)
+  - not necessary anymore it seems. compiling the app itself with -rdynamic seems neater. 
 - let RCCPP know about the dylib
 - hope that it works
 
-INSTRUCTIONS
+
+###  INSTRUCTIONS
 based on:
 https://github.com/RuntimeCompiledCPlusPlus/RuntimeCompiledCPlusPlus/wiki/Integrating-to-your-own-codebase
+
 ---
-1. create addon
+
+### 1. create addon
 
 create folder addons/ofxRuntimeCompiledCPlusPlus
 put the Aurora folder inside of it so that you have
@@ -17,8 +26,8 @@ create folder addons/ofxRuntimeCompiledCPlusPlus/Aurora
 
 
 
----
-2. set up empty example
+
+### 2. set up empty example
 
 a. make sure it compiles and runs.
 b. in xcode create a new group addons/RuntimeCPlusPlus
@@ -29,8 +38,27 @@ f. drag both products (libRuntimeObjectSystem.a and libRuntimeCompiler.a) to the
    "link binary with libraries" stage of the emptyExample target.
 g. in emptyExample, set deployment target to 10.7 or newer
 h. add ../../../addons/ofxRuntimeCompiledCPlusPlus/Aurora to user header search paths of your project
+i. add -rdynamic to your linker flags to export all functions (like ofDrawLine) so they can be used from a shared library. 
+
 
 see if it still compiles :) 
+
+#### Modify Compiler_PlatformPosix.cpp
+
+Around line 144 change 
+
+		compilerLocation = "clang++ "
+
+to 
+
+		compilerLocation = "clang++ -stdlib=libstdc++ -undefined dynamic_lookup";
+
+`-undefined dynamic_lookup` is needed at the moment because there will be lots of undefined symbols (like ofDrawLine, etc.), that are only resolved once the library is actually loaded.
+
+maybe add `-m32` as well if you use 32 bits. 
+
+
+
 
 ---
 3. modify your sources
@@ -75,6 +103,7 @@ add to ofApp.h
 - - - - - - - - - - - - -
 
 change to 
+
 	class ofApp : public ofBaseApp,public IObjectFactoryListener{
 
 and create the variables
@@ -124,7 +153,9 @@ and add the method
 
 
 you'll need to create these three files in your project: 
+
 RuntimeObject01.cpp
+
 	#include <RuntimeObjectSystem/ObjectInterfacePerModule.h>
 	#include <RuntimeObjectSystem/IObject.h>
 	#include "IUpdateable.h"
@@ -145,6 +176,7 @@ RuntimeObject01.cpp
 	
 	
 InterfaceIds.h
+
 	#pragma once
 
 	#ifndef INTERFACEIDS_INCLUDED
@@ -163,10 +195,11 @@ InterfaceIds.h
 	#endif //INTERFACEIDS_INCLUDED
 	
 IUpdateable.h
+
 	#pragma once
 
 	#ifndef IUPDATEABLE_INCLUDED
-	#define IUPDATEABLE_INCLUDED
+	#define IUPDATEABLE_INCLUDED		
 
 	#include <RuntimeObjectSystem/IObject.h>
 
@@ -176,5 +209,6 @@ IUpdateable.h
 	};
 
 	#endif // IUPDATEABLE_INCLUDED
+	
 	
 	
